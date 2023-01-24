@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Book\AuthorController;
 use App\Http\Controllers\Api\V1\ScannerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,15 @@ Route::name('api.')->middleware(['return-json'])->group(function () {
 
     Route::prefix('v1')->group(callback: function () {
 
-        Route::post('scanner', [ScannerController::class, 'create']);
+        Route::post(uri: 'scan', action: [ScannerController::class, 'create']);
 
+        Route::get(uri:'author/top-100', action: [AuthorController::class, 'list']);
+
+    });
+
+    Route::fallback(function () {
+        return response()->json([
+            'error' => __('Not found2'),
+        ], 404);
     });
 });
