@@ -28,7 +28,10 @@ class ScannerController extends ApiController
                 authorId: $author->id
             ))->create();
 
-            if ($book) return $this->responseSuccess(data: [$book]);
+            if ($book) {
+                DB::commit();
+                return $this->responseSuccess(data: [$book]);
+            }
         }
         DB::rollBack();
 
