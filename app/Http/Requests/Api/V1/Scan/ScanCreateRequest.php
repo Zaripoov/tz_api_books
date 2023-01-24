@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Scanner;
+namespace App\Http\Requests\Api\V1\Scan;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ScannerCreateRequest extends FormRequest
+class ScanCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

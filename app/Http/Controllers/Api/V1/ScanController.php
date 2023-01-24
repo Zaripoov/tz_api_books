@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\Api\V1\Scanner\ScannerCreateRequest;
+use App\Http\Requests\Api\V1\Scan\ScanCreateRequest;
 use App\Models\Book;
 use App\Models\BookAuthor;
 use App\Services\Book\SaveBookService;
@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\DB;
 class ScanController extends ApiController
 {
     /**
-     * @param ScannerCreateRequest $request
+     * @param ScanCreateRequest $request
      * @return JsonResponse
      */
-    public function create(ScannerCreateRequest $request): JsonResponse
+    public function create(ScanCreateRequest $request): JsonResponse
     {
         DB::beginTransaction();
         $author = (new SaveAuthorService(name: $request->getAuthorFullName()))->create();
