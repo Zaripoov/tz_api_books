@@ -7,10 +7,5 @@ use Illuminate\Http\JsonResponse;
 
 class BookController extends ApiController
 {
-    public function list(): JsonResponse
-    {
-        return $this->responseSuccess();
-
-    }
 
 }

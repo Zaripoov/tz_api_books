@@ -10,7 +10,7 @@ use App\Services\BookAuthor\SaveAuthorService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class ScannerController extends ApiController
+class ScanController extends ApiController
 {
     /**
      * @param ScannerCreateRequest $request

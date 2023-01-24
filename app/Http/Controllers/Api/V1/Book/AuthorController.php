@@ -10,9 +10,12 @@ class AuthorController extends ApiController
 {
     public function list(): JsonResponse
     {
-        $authors = GetAuthorService::top100ByPagination();
+        return $this->responseSuccess(GetAuthorService::top100ByPagination());
+    }
 
-        return $this->responseSuccess($authors);
+    public function search()
+    {
+
     }
 
 }
