@@ -2,15 +2,37 @@
 
 namespace App\Services\BookAuthor;
 
+use App\Http\Resources\Api\V1\Author\AuthorByBookResource;
 use App\Models\BookAuthor;
+use Illuminate\Support\Facades\DB;
 
 class GetAuthorService
 {
-    public static function top100ByPagination(int $limit = 15)
+    public static function top100ByPagination(int $limit = 15): array
     {
-        $authors = BookAuthor::query()->get();
+        $paginate = BookAuthor::query()
+            ->withCount('books')
+            ->orderBy('books_count', 'desc')
+            ->limit(100)
+            ->cursorPaginate($limit);
 
-        return $authors;
+        $items = [];
+
+        foreach ($paginate->items() as $item) {
+
+            $items[] = new AuthorByBookResource($item);
+        }
+
+        return [
+            'items' => $items,
+            'paginate' => [
+                'count' => $paginate->count(),
+                'hasPages' => $paginate->hasPages(),
+                'nextCursor' => $paginate->nextCursor()?->encode(),
+                'previousCursor' => $paginate->previousCursor()?->encode(),
+                'perPage' => $paginate->perPage(),
+            ]
+        ];
     }
 
 }
