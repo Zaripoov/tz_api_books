@@ -14,9 +14,7 @@ return new class extends Migration {
     {
         Schema::create(table: 'book_authors', callback: function (Blueprint $table) {
             $table->id();
-            $table->string(column: 'surname', length: 20);
-            $table->string(column: 'name', length: 15);
-            $table->string(column: 'patronymic', length: 25)->nullable();
+            $table->string(column: 'name', length: 255);
         });
     }
 
