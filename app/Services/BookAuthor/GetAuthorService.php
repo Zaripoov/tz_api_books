@@ -35,4 +35,29 @@ class GetAuthorService
         ];
     }
 
+    public static function searchByName($request): array
+    {
+        $query = BookAuthor::query()
+            ->filter($request->toArray())
+            ->cursorPaginate();
+
+        $items = [];
+
+        foreach ($query->items() as $item) {
+
+            $items[] = new AuthorByBookResource($item);
+        }
+
+        return [
+            'items' => $items,
+            'paginate' => [
+                'count' => $query->count(),
+                'hasPages' => $query->hasPages(),
+                'nextCursor' => $query->nextCursor()?->encode(),
+                'previousCursor' => $query->previousCursor()?->encode(),
+                'perPage' => $query->perPage(),
+            ]
+        ];
+    }
+
 }

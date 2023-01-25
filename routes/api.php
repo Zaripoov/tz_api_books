@@ -23,6 +23,7 @@ Route::name('api.')->middleware(['return-json'])->group(function () {
         Route::post(uri: 'scan', action: [ScanController::class, 'create']);
 
         Route::get(uri:'author/top-100', action: [AuthorController::class, 'list']);
+        Route::post(uri:'author/search', action: [AuthorController::class, 'search']);
 
     });
 
