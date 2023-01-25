@@ -3,6 +3,8 @@
 namespace App\Services\BookAuthor;
 
 use App\Http\Resources\Api\V1\Author\AuthorByBookResource;
+use App\Http\Resources\Api\V1\Book\BookResource;
+use App\Models\Book;
 use App\Models\BookAuthor;
 use Illuminate\Support\Facades\DB;
 
@@ -37,25 +39,31 @@ class GetAuthorService
 
     public static function searchByName($request): array
     {
-        $query = BookAuthor::query()
+        $authors = BookAuthor::query()
             ->filter($request->toArray())
-            ->cursorPaginate();
+            ->get()
+            ->keyBy('id')
+            ->toArray();
+
+
+        $books = Book::query()->whereIn( column: 'author_id',values: array_keys($authors))->cursorPaginate();
 
         $items = [];
 
-        foreach ($query->items() as $item) {
+        foreach ($books->items() as $item) {
 
-            $items[] = new AuthorByBookResource($item);
+            $items[] = new BookResource($item);
         }
 
         return [
+            'search' => $request->getName(),
             'items' => $items,
             'paginate' => [
-                'count' => $query->count(),
-                'hasPages' => $query->hasPages(),
-                'nextCursor' => $query->nextCursor()?->encode(),
-                'previousCursor' => $query->previousCursor()?->encode(),
-                'perPage' => $query->perPage(),
+                'count' => $books->count(),
+                'hasPages' => $books->hasPages(),
+                'nextCursor' => $books->nextCursor()?->encode(),
+                'previousCursor' => $books->previousCursor()?->encode(),
+                'perPage' => $books->perPage(),
             ]
         ];
     }

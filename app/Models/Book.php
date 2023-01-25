@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -18,6 +20,7 @@ use Illuminate\Support\Carbon;
  * @property int $author_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection|BookAuthor[] $author
  * @method static Builder|Book newModelQuery()
  * @method static Builder|Book newQuery()
  * @method static Builder|Book query()
@@ -35,4 +38,9 @@ class Book extends Model
     use HasFactory;
 
     protected $table = 'books';
+
+    public function author(): HasOne
+    {
+        return $this->hasOne(BookAuthor::class,'id', 'author_id');
+    }
 }

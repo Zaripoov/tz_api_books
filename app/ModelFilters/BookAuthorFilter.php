@@ -16,6 +16,6 @@ class BookAuthorFilter extends ModelFilter
 
     public function name(string $name): BookAuthorFilter
     {
-        return $this->where('name',$name);
+        return $this->where(column: 'name',operator: 'LIKE', value: '%'.$name.'%');
     }
 }
