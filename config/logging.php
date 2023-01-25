@@ -1,8 +1,11 @@
 <?php
 
+use Illuminate\Support\Carbon;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
+
+$carbon = Carbon::now();
 
 return [
 
@@ -51,6 +54,10 @@ return [
     */
 
     'channels' => [
+        'scan' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/scan/' . $carbon->year . '/' . $carbon->month . '/' . $carbon->day . '.log'),
+        ],
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
@@ -85,7 +92,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
         ],
 

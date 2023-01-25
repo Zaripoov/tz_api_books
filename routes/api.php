@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Book\AuthorController;
+use App\Http\Controllers\Api\V1\Book\BookController;
 use App\Http\Controllers\Api\V1\ScanController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +24,9 @@ Route::name('api.')->middleware(['return-json'])->group(function () {
 
         Route::get(uri:'author/top-100', action: [AuthorController::class, 'list']);
         Route::post(uri:'author/search', action: [AuthorController::class, 'search']);
+        Route::post(uri:'author/average-per-year', action: [AuthorController::class, 'averagePerYear']);
+
+        Route::get(uri: 'books/list', action: [BookController::class, 'list']);
 
     });
 

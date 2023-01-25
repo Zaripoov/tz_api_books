@@ -123,6 +123,7 @@ class SaveBookService
             return $book;
         }catch (Exception $exception){
             Log::error('SaveBookService. Error while saving: ' . $exception->getMessage());
+            Log::channel(channel: 'scan')->error($exception->getMessage());
 
             return false;
         }

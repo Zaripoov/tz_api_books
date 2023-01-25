@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,11 +32,12 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Book whereTitle($value)
  * @method static Builder|Book whereUpdatedAt($value)
  * @method static Builder|Book whereYear($value)
+ * @method static filter($toArray)
  * @mixin Eloquent
  */
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     protected $table = 'books';
 

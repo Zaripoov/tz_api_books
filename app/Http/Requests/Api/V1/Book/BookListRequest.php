@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\BookAuthor;
+namespace App\Http\Requests\Api\V1\Book;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookAuthorSearchRequest extends FormRequest
+class BookListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,12 @@ class BookAuthorSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100']
+            'year' => ['nullable', 'string', 'regex:/^[0-9]{4}\-[0-9]{4}$/i']
         ];
     }
 
-    public function getName() :string
+    public function getYear()
     {
-        return $this->get('name');
+        return $this->get('year');
     }
 }
