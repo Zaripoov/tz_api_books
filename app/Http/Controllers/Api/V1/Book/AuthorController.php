@@ -14,7 +14,7 @@ class AuthorController extends ApiController
         return $this->responseSuccess(GetAuthorService::top100ByPagination());
     }
 
-    public function search(BookAuthorSearchRequest $request)
+    public function search(BookAuthorSearchRequest $request): JsonResponse
     {
         return $this->responseSuccess(GetAuthorService::searchByName($request));
     }
