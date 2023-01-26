@@ -36,7 +36,7 @@ services:
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d/
-      - ./logs/nginx:/var/log/nginx
+      - ./docker-compose/logs/nginx:/var/log/nginx
     networks:
         - internet-magazine
     links:
