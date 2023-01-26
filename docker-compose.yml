@@ -1,0 +1,46 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: books-app
+    volumes:
+      - ./:/var/www
+    networks:
+        - internet-magazine
+    links:
+        - db
+
+  db:
+    image: mysql:latest
+    container_name: books-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+        - internet-magazine
+
+  nginx:
+    image: nginx:latest
+    container_name: books-nginx
+    restart: always
+    ports:
+        - "80:80"
+        - "443:443"
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+      - ./logs/nginx:/var/log/nginx
+    networks:
+        - internet-magazine
+    links:
+        - app
+
+networks:
+    internet-magazine:
