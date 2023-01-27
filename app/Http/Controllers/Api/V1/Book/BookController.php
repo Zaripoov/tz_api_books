@@ -11,7 +11,7 @@ class BookController extends ApiController
 {
     public function list(BookListRequest $request): JsonResponse
     {
-        return $this->responseSuccess([GetBookService::get($request)]);
+        return $this->responseSuccess(GetBookService::get($request));
     }
 
 }

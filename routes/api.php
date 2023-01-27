@@ -18,15 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('api.')->middleware(['return-json'])->group(function () {
 
-    Route::prefix('v1')->group(callback: function () {
+    Route::prefix('v1')->name('v1.')->group(callback: function () {
 
-        Route::post(uri: 'scan', action: [ScanController::class, 'create']);
+        Route::post(uri: 'scan', action: [ScanController::class, 'create'])->name('scan.post');
 
-        Route::get(uri:'author/top-100', action: [AuthorController::class, 'list']);
-        Route::post(uri:'author/search', action: [AuthorController::class, 'search']);
-        Route::post(uri:'author/average-per-year', action: [AuthorController::class, 'averagePerYear']);
+        Route::get(uri:'author/top-100', action: [AuthorController::class, 'list'])->name('author.top-100.get');
+        Route::get(uri:'author/search', action: [AuthorController::class, 'search'])->name('author.search.get');
+        Route::get(uri:'author/average-per-year', action: [AuthorController::class, 'averagePerYear'])->name('author.average-per-year.get');
 
-        Route::get(uri: 'books/list', action: [BookController::class, 'list']);
+        Route::get(uri: 'books/list', action: [BookController::class, 'list'])->name('books.list.get');
 
     });
 
